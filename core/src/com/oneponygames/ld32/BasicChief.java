@@ -12,4 +12,9 @@ public abstract class BasicChief implements Chief {
         this.village = village;
     }
 
+
+    @Override
+    public void notifySpring(int newPop) {
+
+    }
 }

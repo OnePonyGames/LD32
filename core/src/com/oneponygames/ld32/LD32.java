@@ -17,11 +17,13 @@ public class LD32 extends Game {
 
     @Override
 	public void create () {
+        GameScreen gameScreen = new GameScreen();
+
         Chief c1 = Strategy.NO_WAR(0.0);
         Chief c2 = Strategy.TIT_TAT();
         Chief c3 = Strategy.WAR(0.05);
-        PlayerChief player = new PlayerChief();
-        
+        PlayerChief player = new PlayerChief(gameScreen);
+
         Village v1 = new Village(c1, STARTING_POP, STARTING_FOOD, "Verengi");
         Village v2 = new Village(c2, STARTING_POP, STARTING_FOOD, "Okhoti");
         Village v3 = new Village(c3, STARTING_POP, STARTING_FOOD, "Suremi");
@@ -33,7 +35,6 @@ public class LD32 extends Game {
         v3.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, playerVillage)));
         playerVillage.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, v3)));
 
-        GameScreen gameScreen = new GameScreen();
 
         this.simulation = new SimulationManager(villages, gameScreen, 20);
         this.simulation.start();

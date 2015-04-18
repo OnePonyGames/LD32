@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.awt.peer.ChoicePeer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,11 +22,14 @@ public class GameScreen implements Screen {
 
     private static final float SEASON_CHANGE_TIME = 1.5f;
     private SpriteBatch batch;
+    private BitmapFont font;
     private OrthographicCamera camera;
     private Map<Season, Texture> backgrounds;
+    private Texture ui;
     private Season season;
     private Season newSeason;
     private float seasonWait;
+    private List<String> texts = new ArrayList<String>();
 
     @Override
     public void show() {
@@ -30,6 +37,8 @@ public class GameScreen implements Screen {
 
         batch = new SpriteBatch();
         batch.enableBlending();
+        font = new BitmapFont();
+        font.setColor(new Color(96/255, 90/255, 108/255, 1f));
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800, 600);
@@ -39,6 +48,8 @@ public class GameScreen implements Screen {
         this.backgrounds.put(Season.SUMMER, new Texture(Gdx.files.internal("background_2_summer.png")));
         this.backgrounds.put(Season.AUTUMN, new Texture(Gdx.files.internal("background_3_autumn.png")));
         this.backgrounds.put(Season.WINTER, new Texture(Gdx.files.internal("background_4_winter.png")));
+
+        this.ui = new Texture(Gdx.files.internal("UI.png"));
     }
 
     @Override
@@ -64,6 +75,20 @@ public class GameScreen implements Screen {
                 this.newSeason = null;
             }
         }
+
+        Color c = this.batch.getColor();
+        this.batch.setColor(c.r, c.b, c.g, 1f);
+
+        this.batch.draw(this.ui, 0, 0);
+
+        for (int i = 0; i < this.texts.size(); i++) {
+            String text = this.texts.get(i);
+            this.font.draw(this.batch, text, 30, 120 - i * 12);
+        }
+
+        if(this.texts.size()>4)
+            this.texts.remove(4);
+
         batch.end();
     }
 
@@ -99,5 +124,9 @@ public class GameScreen implements Screen {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addText(String text) {
+        this.texts.add(text);
     }
 }

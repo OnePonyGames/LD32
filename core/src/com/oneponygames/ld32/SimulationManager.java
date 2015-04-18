@@ -91,14 +91,16 @@ public class SimulationManager implements Runnable {
     }
 
     private void resolveSpring(Village v) {
+        int newPop =0;
         if(!v.haveStarved()) {
             double val = 0.1 + 1 - v.getFood() / v.getPopulation();
             double fact = Math.min(val, MAX_POP_GROWTH);
-            int newPop = Math.max(1, (int) (v.getPopulation() * fact));
+            newPop = Math.max(1, (int) (v.getPopulation() * fact));
 
-            System.out.println("New population for "+v.getName()+" "+newPop );
+            System.out.println("New population for " + v.getName() + " "+newPop );
             v.addPopulation(newPop);
         }
+        v.getChief().notifySpring(newPop);
         v.setFood(0);
 
         v.getChief().distributePopulation();

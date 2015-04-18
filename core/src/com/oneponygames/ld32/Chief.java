@@ -12,4 +12,6 @@ public interface Chief {
     public AutumnAction determineAutumnAction();
 
     public void notifyRaidFrom(Village perpetrator, int foodStolen);
+
+    public void notifySpring(int newPop);
 }
