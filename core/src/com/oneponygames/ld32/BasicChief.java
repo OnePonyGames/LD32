@@ -17,4 +17,16 @@ public abstract class BasicChief implements Chief {
     public void notifySpring(int newPop) {
 
     }
+
+    public void notifyAutumn(int producedFood) {
+
+    }
+
+    public void notifyWinter(int starvedPeople) {
+
+    }
+
+    public void notifySummer() {
+
+    }
 }

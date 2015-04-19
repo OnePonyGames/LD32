@@ -1,12 +1,6 @@
 package com.oneponygames.ld32;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.*;
 
@@ -24,10 +18,10 @@ public class LD32 extends Game {
         Chief c3 = Strategy.WAR(0.05);
         PlayerChief player = new PlayerChief(gameScreen);
 
-        Village v1 = new Village(c1, STARTING_POP, STARTING_FOOD, "Verengi");
-        Village v2 = new Village(c2, STARTING_POP, STARTING_FOOD, "Okhoti");
-        Village v3 = new Village(c3, STARTING_POP, STARTING_FOOD, "Suremi");
-        Village playerVillage = new Village(player, STARTING_POP, STARTING_FOOD, "Player");
+        Village v1 = new Village(c1, STARTING_POP, STARTING_FOOD, "Verengi", 440, 600-312);
+        Village v2 = new Village(c2, STARTING_POP, STARTING_FOOD, "Okhoti", 148, 600-170);
+        Village v3 = new Village(c3, STARTING_POP, STARTING_FOOD, "Suremi", 570, 600-45);
+        Village playerVillage = new Village(player, STARTING_POP, STARTING_FOOD, "Your Village", 235, 600-60);
 
         List<Village> villages = new ArrayList<Village>(Arrays.asList(v1, v2, v3, playerVillage));
         v1.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v3, playerVillage)));
@@ -35,6 +29,8 @@ public class LD32 extends Game {
         v3.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, playerVillage)));
         playerVillage.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, v3)));
 
+        gameScreen.setVillages(villages);
+        gameScreen.setPlayerVillage(playerVillage);
 
         this.simulation = new SimulationManager(villages, gameScreen, 20);
         this.simulation.start();

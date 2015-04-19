@@ -42,13 +42,13 @@ public class SimulationManager implements Runnable {
 
             for(Season s : Season.values()) {
                 System.out.println("Season " + s);
-                this.gameScreen.setSeason(s);
 
                 try {
-                    System.in.read();
-                } catch (IOException e) {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                this.gameScreen.setSeason(s);
 
                 for(Village v : this.villages)  {
                     this.resolveSeason(s, v);
@@ -114,6 +114,7 @@ public class SimulationManager implements Runnable {
         System.out.println(v.getName() + " produced "+food+" for "+v.getPopulation()+" people fr: "+v.getFoodRequirement());
 
         v.setFood(food);
+        v.getChief().notifyAutumn(food);
 
         this.autumnActions.add(v.getChief().determineAutumnAction());
     }
@@ -131,15 +132,17 @@ public class SimulationManager implements Runnable {
 
     private void resolveWinter(Village v) {
         v.setStarved(false);
+        int starve = 0;
         if(!v.hasEnoughtFood()) {
-            int starve = v.getFoodDeficit();
+            starve = v.getFoodDeficit();
             System.out.println(v.getName() + " starving: "+starve);
             v.starvePopulation( starve);
         }
+        v.getChief().notifyWinter(starve);
     }
 
     private void resolveSummer(Village v) {
-
+        v.getChief().notifySummer();
     }
 
     private void resolveSeason(Season s, Village v) {

@@ -14,4 +14,10 @@ public interface Chief {
     public void notifyRaidFrom(Village perpetrator, int foodStolen);
 
     public void notifySpring(int newPop);
+
+    public void notifyAutumn(int food);
+
+    public void notifyWinter(int starve);
+
+    public void notifySummer();
 }

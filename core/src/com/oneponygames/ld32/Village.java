@@ -11,6 +11,8 @@ public class Village {
     private static final double WARRIOR_FOOD_FACT = 2;
 
     private final Chief chief;
+    private final int y;
+    private final int x;
 
     private int population;
     private int food;
@@ -22,13 +24,15 @@ public class Village {
     private Set<Village> neighbors;
     private String foodRequirement;
 
-    public Village(Chief chief, int startingPop, int startingFood, String name) {
+    public Village(Chief chief, int startingPop, int startingFood, String name, int x, int y) {
         this.chief = chief;
         this.population = startingPop;
         this.farmers = this.population;
         this.food = startingFood;
         this.starved = false;
         this.name = name;
+        this.x = x;
+        this.y = y;
 
         chief.setVillage(this);
     }
@@ -122,5 +126,13 @@ public class Village {
 
     public void removeNeighbor(Village v) {
         this.neighbors.remove(v);
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
     }
 }
