@@ -25,6 +25,13 @@ public class Strategy {
             public void notifyRaidFrom(Village perpetrator, int foodStolen) {
 
             }
+
+            @Override
+            public int doProvideAssistance(int foodDeficit, Village village) {
+                if(this.village.getSpareFood() > 0)
+                    return this.village.getSpareFood();
+                return 0;
+            }
         };
     }
 
@@ -47,6 +54,11 @@ public class Strategy {
                 while(this.village.getWarriors() < (int) (this.village.getPopulation() * warriorFact))
                     this.village.addWarriors(1);
                 this.village.evenFarmers();
+            }
+
+            @Override
+            public int doProvideAssistance(int foodDeficit, Village village) {
+                return 0;
             }
 
             @Override
@@ -90,6 +102,12 @@ public class Strategy {
                     this.target = perpetrator;
                     this.addWarriors = (int) Math.max(1, this.village.getPopulation() * 0.05);
                 }
+            }
+
+            @Override
+            public int doProvideAssistance(int foodDeficit, Village village) {
+                // TODO
+                return 0;
             }
         };
     }

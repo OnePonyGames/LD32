@@ -1,6 +1,5 @@
 package com.oneponygames.ld32;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -62,6 +61,7 @@ public class SimulationManager implements Runnable {
                                     this.resolveRaid(a.getVillage(), a.getTarget());
                                     break;
                                 case ASSISTANCE:
+                                    this.resolveAssistance(a.getVillage(), a.getTarget());
                                     break;
                                 case NOTHING:
                                     System.out.println(a.getVillage().getName() + " do nothing.");
@@ -80,6 +80,8 @@ public class SimulationManager implements Runnable {
 
                                 for(Village v1 : this.villages)  {
                                     v1.removeNeighbor(v);
+                                    if(!v1.equals(v))
+                                        v1.getChief().notifyVillageStarved(v);
                                 }
                             }
                         }
@@ -88,6 +90,17 @@ public class SimulationManager implements Runnable {
 
             }
         }
+    }
+
+    private void resolveAssistance(Village village, Village target) {
+        int food = target.getChief().doProvideAssistance(village.getFoodDeficit(), village);
+
+        System.out.println("The people of "+target.getName()+ " provide the people of "+village.getName()+" with "+food+" food" );
+
+        village.addFood(food);
+        target.removeFood(food);
+
+        village.getChief().notifyFoodAssistance(food);
     }
 
     private void resolveSpring(Village v) {
@@ -125,7 +138,9 @@ public class SimulationManager implements Runnable {
 
         perpetrator.addFood(foodStolen);
         target.removeFood(foodStolen);
+
         target.getChief().notifyRaidFrom(perpetrator, foodStolen);
+        perpetrator.getChief().notifyRaidResult(target, foodStolen);
 
         System.out.println(perpetrator.getName() + " are raiding " + target.getName() + " and stole " + foodStolen + " food");
     }

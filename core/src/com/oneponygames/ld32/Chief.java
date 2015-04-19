@@ -20,4 +20,12 @@ public interface Chief {
     public void notifyWinter(int starve);
 
     public void notifySummer();
+
+    public void notifyRaidResult(Village target, int foodStolen);
+
+    public void notifyVillageStarved(Village v);
+
+    public int doProvideAssistance(int foodDeficit, Village village);
+
+    public void notifyFoodAssistance(int food);
 }

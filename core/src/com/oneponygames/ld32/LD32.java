@@ -24,10 +24,10 @@ public class LD32 extends Game {
         Village playerVillage = new Village(player, STARTING_POP, STARTING_FOOD, "Your Village", 235, 600-60);
 
         List<Village> villages = new ArrayList<Village>(Arrays.asList(v1, v2, v3, playerVillage));
-        v1.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v3, playerVillage)));
-        v2.setNeighbors(new HashSet<Village>(Arrays.asList(v1, v3, playerVillage)));
-        v3.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, playerVillage)));
-        playerVillage.setNeighbors(new HashSet<Village>(Arrays.asList(v2, v1, v3)));
+        v1.setNeighbors(new ArrayList<Village>(Arrays.asList(v2, v3, playerVillage)));
+        v2.setNeighbors(new ArrayList<Village>(Arrays.asList(v1, v3, playerVillage)));
+        v3.setNeighbors(new ArrayList<Village>(Arrays.asList(v2, v1, playerVillage)));
+        playerVillage.setNeighbors(new ArrayList<Village>(Arrays.asList(v2, v1, v3)));
 
         gameScreen.setVillages(villages);
         gameScreen.setPlayerVillage(playerVillage);

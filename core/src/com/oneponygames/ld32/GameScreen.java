@@ -38,10 +38,11 @@ public class GameScreen extends InputAdapter implements Screen {
     private String inputText;
     private int inputMin;
     private int inputMax;
+    private int year;
 
     @Override
     public void show() {
-        this.season = Season.SPRING;
+        this.season = Season.WINTER;
 
         batch = new SpriteBatch();
         batch.enableBlending();
@@ -92,9 +93,11 @@ public class GameScreen extends InputAdapter implements Screen {
         this.batch.draw(this.ui, 0, 0);
 
         font.setColor(new Color(96 / 255, 90 / 255, 108 / 255, 1f));
-        this.font.draw(this.batch, "Your Village", 670, 130);
+        this.font.draw(this.batch, "Your Village, year "+this.year, 650, 130);
         this.font.draw(this.batch, "x "+this.playerVillage.getWarriors(), 655, 100);
         this.font.draw(this.batch, "x "+this.playerVillage.getFarmers(), 655, 55);
+        this.font.draw(this.batch, "x "+this.playerVillage.getFood(), 740, 100);
+        this.font.draw(this.batch, "x "+this.playerVillage.getFoodRequirement(), 740, 55);
 
         for (int i = 0; i < this.texts.size(); i++) {
             String text = this.texts.get(i);
@@ -141,6 +144,8 @@ public class GameScreen extends InputAdapter implements Screen {
     }
 
     public void setSeason(Season season) {
+        if(season == Season.SPRING)
+            year++;
         this.newSeason = season;
         try {
             Thread.sleep((long) (SEASON_CHANGE_TIME * 1000));
@@ -199,5 +204,9 @@ public class GameScreen extends InputAdapter implements Screen {
             }
         }
         return true;
+    }
+
+    public void playerLost() {
+        this.addText("You lost, all your people starved to death.");
     }
 }

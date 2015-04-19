@@ -21,8 +21,7 @@ public class Village {
 
     private int warriors;
     private int farmers;
-    private Set<Village> neighbors;
-    private String foodRequirement;
+    private List<Village> neighbors;
 
     public Village(Chief chief, int startingPop, int startingFood, String name, int x, int y) {
         this.chief = chief;
@@ -61,11 +60,6 @@ public class Village {
         return chief;
     }
 
-    public void setWarriors(int warriors) {
-        this.warriors = warriors;
-        this.farmers = this.population - warriors;
-    }
-
     public int getWarriors() {
         return warriors;
     }
@@ -88,11 +82,11 @@ public class Village {
         this.starved = true;
     }
 
-    public void setNeighbors(Set<Village> neighbors) {
+    public void setNeighbors(List<Village> neighbors) {
         this.neighbors = neighbors;
     }
 
-    public Set<Village> getNeighbors() {
+    public List<Village> getNeighbors() {
         return neighbors;
     }
 
@@ -134,5 +128,9 @@ public class Village {
 
     public int getX() {
         return x;
+    }
+
+    public int getSpareFood() {
+        return this.getFood() - this.getFoodRequirement();
     }
 }

@@ -29,4 +29,16 @@ public abstract class BasicChief implements Chief {
     public void notifySummer() {
 
     }
+
+    public void notifyRaidResult(Village target, int foodStolen) {
+
+    }
+
+    public void notifyVillageStarved(Village v) {
+
+    }
+
+    public void notifyFoodAssistance(int food) {
+
+    }
 }
